@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct graph{
+    int ribs;
+    int vertexs;
+    vector<vector<pair<int, int>>> edges;
+};
+
+void output_graph(graph a){
+   for(int i = 0; i<a.edges.size(); i++){
+      cout<<i+1<<": ";
+      for(auto p: a.edges[i]){
+         cout<<p.first<<" "<<p.second<<'\n';
+      }
+   }
+}
+graph a;
+int main()
+{
+    cout<<"Amount of ribs = ";
+    cin>>a.ribs;
+    cout<<"Amount of vertexs = ";
+    cin>>a.vertexs;
+    a.edges.resize(a.ribs);
+    for(int start = 0; start<a.ribs; start++){
+        int dest;
+        int weight;
+        cin>>dest>>weight;
+        a.edges[start].push_back(make_pair(dest, weight));
+    }
+    output_graph(a);
+
+}
