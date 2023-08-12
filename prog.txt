@@ -3,16 +3,43 @@ using namespace std;
 struct graph{
     int ribs;
     int vertexs;
+    int start;
+    int finish;
     vector<vector<pair<int, int>>> edges;
 };
-
-void output_graph(graph a){
-   for(int i = 0; i<a.edges.size(); i++){
+void input_graph(graph &a){
+   int start;
+   for(int i = 1; i<a.ribs+1; i++){
+    cin>>start;
+    int dest;
+    int weight;
+    cin>>dest>>weight;
+    a.edges[start-1].push_back(make_pair(dest, weight));
+    a.edges[dest-1].push_back(make_pair(start, weight));
+   }
+}
+void output_graph(graph &a){
+   for(int i = 0; i<a.vertexs; i++){
       cout<<i+1<<": ";
       for(auto p: a.edges[i]){
-         cout<<p.first<<" "<<p.second<<'\n';
+         cout<<"("<<p.first<<" "<<p.second<<")"<<" ";
       }
+      cout<<'\n';
+    }
+}
+int check(graph a){
+   int start = a.start-1;
+   int etalon = 0;
+   int index;
+   for(int i = 0; i<a.edges[start].size(); i++){
+       for(auto p: a.edges[i]){
+       if(a.edges[start][i].second<=a.edges[start][etalon].second){
+        etalon = i;
+        index = a.edges[start][etalon].first;
+       }
+       }
    }
+   return index;
 }
 graph a;
 int main()
@@ -21,13 +48,13 @@ int main()
     cin>>a.ribs;
     cout<<"Amount of vertexs = ";
     cin>>a.vertexs;
-    a.edges.resize(a.ribs);
-    for(int start = 0; start<a.ribs; start++){
-        int dest;
-        int weight;
-        cin>>dest>>weight;
-        a.edges[start].push_back(make_pair(dest, weight));
-    }
+    cout<<"Start = ";
+    cin>>a.start;
+    cout<<"Finish = ";
+    cin>>a.finish;
+    a.edges.resize(a.ribs+1);
+    input_graph(a);
+    cout<<check(a)<<'\n';
     output_graph(a);
 
 }
